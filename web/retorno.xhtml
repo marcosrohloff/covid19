@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"      
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Mensagem</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="stylesheet" href="resources/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="resources/css/style.css" type="text/css" /> 
+        <meta http-equiv="refresh" content="3;url=/covid19/" />
+    </h:head>
+
+    <h:body>
+
+        <!--seção 1 -->
+        <section class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <header>
+                        <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Monitoramento diário de sinais e sintomas</h2>
+                        <span>Lei nº 4.456, de 31/05/2012.Alterado pela Lei 4.838, de 14/03/2016.</span>
+                    </header>
+                </div>
+            </div>
+            <h:form id="frmok">
+
+                <p:messages id="messages" showDetail="true" showSummary="true" closable="true">
+                    <p:autoUpdate />
+                </p:messages>
+
+                <h:commandLink id="btnVoltar" value="Voltar" action="#{sintomaController.voltar}" immediate="true" class="btn btn-primary btn-block" />
+            </h:form>
+
+        </section>
+
+    </h:body>
+</html>

@@ -1,0 +1,214 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Inicio</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta http-equiv="cache-control" content="max-age=0" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="pragma" content="no-cache" />     
+        <link rel="stylesheet" href="resources/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="resources/css/style.css" type="text/css" />
+        <script type="text/javascript" src="resources/js/script.js"></script> 
+    </h:head>
+    <script type="text/javascript">
+        jQuery(function () {
+            jQuery.noConflict();
+        });
+        window.onload = function () {
+            document.getElementById("frmInicio").reset();
+            document.getElementById("frmInicio:matricula").focus();
+        };
+
+        PrimeFaces.locales['pt_BR'] = {
+            closeText: 'Fechar',
+            prevText: 'Anterior',
+            nextText: 'Próximo',
+            currentText: 'Começo',
+            monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+            dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],
+            dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+            weekHeader: 'Semana',
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: '',
+            timeOnlyTitle: 'Só Horas',
+            timeText: 'Tempo',
+            hourText: 'Hora',
+            minuteText: 'Minuto',
+            secondText: 'Segundo',
+            currentText: 'Data Atual',
+            ampm: false,
+            month: 'Mês',
+            week: 'Semana',
+            day: 'Dia',
+            allDayText: 'Todo Dia'
+        };
+
+    </script>
+    <h:body>
+
+        <!--seção 1 -->
+        <section class="container">            
+            <div class="row">                
+                <div class="col-sm-12">
+                    <header>                
+                        <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Monitoramento diário de sinais e sintomas</h2>                            
+                        <span>Lei nº 4.456, de 31/05/2012.Alterado pela Lei 4.838, de 14/03/2016.</span>
+                    </header>
+                </div>
+            </div>
+            <h:form id="frmInicio">
+
+                <p:commandLink id="btnNovo" value="Cadastrar Novo" action="#{funcionarioController.cadastrarNovo}" immediate="true" class="btn btn-primary btn-block" />
+                <p:spacer />
+                <p:commandLink id="btnAlterar" value="Alterar Dados" action="#{funcionarioController.alterarDados}" immediate="true" class="btn btn-primary btn-block" />
+                <p:spacer />
+                <p:commandLink id="btnLimpar" value="Limpar Campos" action="#{sintomaController.voltar}" immediate="true" class="btn btn-default btn-group-justified" />
+                <hr />
+                <div class="form-group">       
+
+                    <div class="row form-inline-space">
+                        <div class="form-group col-sm-4 col-md-4">
+                            <label>Matricula:
+                                <span data-toggle="tooltip" data-placement="right" title="Matricula" class="icon-help">?</span> 
+                            </label>
+                            <div class="input-group">
+                                <h:inputText id="matricula" class="form-control" 
+                                             value="#{sintomaController.matricula}"
+                                             required="true" requiredMessage="* Campo [Matricula] obrigatorio" onkeypress="mascara(this, soNumeros)">
+                                    <f:ajax event="change" listener="#{sintomaController.pesquisar}" execute="frmInicio:matricula" render="@all" />
+                                </h:inputText>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-8 col-md-7">
+                            <label>Nome:</label>
+                            <h:outputText id="nome" class="form-control" value="#{sintomaController.sintomas.funcionario.nome}" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <label class="control-label">Condições de Saúde</label>
+                            <div class="well">
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="cardiaco" class="form-check-input" value="#{sintomaController.sintomas.funcionario.cardiaco}" disabled="true" />
+                                    Doença cardíaca crônica
+                                </label>
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="hipertensao" class="form-check-input" value="#{sintomaController.sintomas.funcionario.hipertensao}" disabled="true" />
+                                    Hipertensão
+                                </label>
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="diabete" class="form-check-input" value="#{sintomaController.sintomas.funcionario.diabete}" disabled="true" />
+                                    Diabetes
+                                </label>
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="pulmonar" class="form-check-input" value="#{sintomaController.sintomas.funcionario.pulmonar}" disabled="true" />
+                                    Doença Pulmonar
+                                </label>
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="renal" class="form-check-input" value="#{sintomaController.sintomas.funcionario.renal}" disabled="true" />
+                                    Doença Renal
+                                </label>
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="imunidade" class="form-check-input" value="#{sintomaController.sintomas.funcionario.imunidade}" disabled="true" />
+                                    Imunidade Baixa
+                                </label>                                
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="gestante" class="form-check-input" value="#{sintomaController.sintomas.funcionario.gestante}" disabled="true" />
+                                    Gestante
+                                </label>
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="anomalias" class="form-check-input" value="#{sintomaController.sintomas.funcionario.anomalias}" disabled="true" />
+                                    Anomalias
+                                </label>                      
+                            </div>
+                        </div> 
+                    </div>                    
+
+                    <hr />
+
+                    <label>Data Atual:</label>
+                    <div class="form-group">
+                        <div class="input-group">                            
+                            <p:calendar id="dataRegistro" value="#{sintomaController.sintomas.data}" locale="pt_BR" navigator="true"
+                                        maxlength="10" pattern="dd/MM/yyyy" onkeypress="mascara(this, mdata)">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                            </p:calendar>
+                        </div>                   
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                            <label class="control-label">Turno:</label>    
+                            <h:selectOneRadio id="turno" value="#{sintomaController.sintomas.turno}" class="col-xs-12" >
+                                <f:selectItem itemLabel="Manhã" itemValue="M" class="control-label" />
+                                <f:selectItem itemLabel="Tarde" itemValue="T" class="control-label" />
+                                <f:selectItem itemLabel="Noite" itemValue="N" class="control-label" />
+                            </h:selectOneRadio>
+                        </div>                     
+                    </div>                   
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-10 col-md-10 col-lg-10">
+                            <label class="control-label">Temperatura:</label>    
+                            <h:selectOneRadio id="febre" value="#{sintomaController.sintomas.febre}" class="col-xs-12" >
+                                <f:selectItem itemLabel="Sem Febre: abaixo de 37,3" itemValue="1" class="control-label" />
+                                <f:selectItem itemLabel="Febrícula: entre 37,3 até 37,8" itemValue="2" class="control-label" />
+                                <f:selectItem itemLabel="Febre: acima de 37,8" itemValue="3" class="control-label" />
+                            </h:selectOneRadio>
+                        </div>                     
+                    </div>  
+
+                    <div class="row">
+                        <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <label class="control-label">Sintomas:</label>
+                            <div class="checkbox">
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="coriza" class="form-check-input" value="#{sintomaController.sintomas.coriza}" />
+                                    Coriza
+                                </label>
+                                <p:spacer height="10px"/>
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="espirro" class="form-check-input" value="#{sintomaController.sintomas.espirro}" />
+                                    Espiro
+                                </label>
+                                <p:spacer height="10px"/>
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="tosse" class="form-check-input" value="#{sintomaController.sintomas.tosse}" />
+                                    Tosse
+                                </label>
+                                <p:spacer height="10px"/>
+                                <label class="control-label">
+                                    <h:selectBooleanCheckbox id="diarreia" class="form-check-input" value="#{sintomaController.sintomas.diarreia}" />
+                                    Diarréia
+                                </label>
+                            </div>
+                        </div>                     
+                    </div>                     
+
+                </div>
+                <p:spacer />
+                <div class="form-group mt-6 mb-6">
+                    <p:commandButton id="btnGravar" value="Salvar Dados" action="#{sintomaController.salvar}"
+                                     ajax="false" resetValues="matricula" class="btn btn-primary btn-block" />
+                </div>
+            </h:form>
+
+        </section>
+        <!-- fim da primeira seção -->
+
+        <script src="resources/js/jquery-2.1.3.min.js"></script>
+        <script src="resources/js/bootstrap.min.js"></script>       
+
+    </h:body>
+</html>
